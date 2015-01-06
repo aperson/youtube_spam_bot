@@ -24,11 +24,11 @@ except:
     IGNORED_SUBREDDITS = (
         '''
         somesubreddit
-        '''.split())
+        '''.lower().split())
     IGNORED_USERS = (
         '''
         someuser
-        '''.split())
+        '''.lower().split())
 
 
 def p(data, end='\n', color_seed=None):
@@ -272,8 +272,8 @@ def get_listings(reddit, stop_point):
     all_listings = [i for i in subreddit.get_new(limit=1000, place_holder=stop_point)]
     listings = []
     for thing in all_listings:
-        if thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS.lower():
-            if thing.author.name.lower() not in IGNORED_USERS.lower():
+        if thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
+            if thing.author.name.lower() not in IGNORED_USERS:
                 listings.append(thing)
     return listings
 
