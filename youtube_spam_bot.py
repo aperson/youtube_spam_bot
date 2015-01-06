@@ -16,10 +16,10 @@ except:
     CACHEFILE = '/path/to/cachefile'
     DATABASEFILE = '/path/to/databasefile'
     REPORT_SUBREDDIT = 'somesubreddit'
-    IGNORED_SUBREDDITS =
+    IGNORED_SUBREDDITS = (
         '''
         somesubreddit
-        '''.split()
+        '''.split())
 
 
 def p(data, end='\n', color_seed=None):
@@ -32,6 +32,7 @@ def p(data, end='\n', color_seed=None):
         '\r\033[K\033[2K[\033[31m%y\033[39m/\033[31m%m\033[39m/\033[31m%d'
         '\033[39m][\033[31m%H\033[39m:\033[31m%M\033[39m:\033[31m%S\033[39m] ')
         + color + data + '\033[39m', end=end)
+
 
 def cache_url():
     """Url caching decorator.  For decorating class functions that take a single url as an arg
@@ -223,10 +224,7 @@ class YoutubeSpam(Filter):
 
     def filterSubmission(self, submission):
         self.report_subreddit = None
-        DAY = 24 * 60 * 60
         if submission.domain in ('m.youtube.com', 'youtube.com', 'youtu.be'):
-            link = 'http://reddit.com/r/{}/comments/{}/'.format(
-                submission.subreddit, submission.id)
             # check if we've already parsed this submission
             try:
                 with bz2.open(DATABASEFILE, 'rt') as db:
@@ -261,16 +259,18 @@ class YoutubeSpam(Filter):
                     f.write(json.dumps(db))
                 return output
 
+
 def get_listing(reddit, stop_point):
     all_subreddits = 'all'
     listing = []
     for thing in all_subreddits.get_new('all', limit=None):
-        if not thing.subreddit.display_name not in IGNORED_SUBREDDITS:
-            if thing.id not stop_point:
+        if not thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
+            if thing.id != stop_point:
                 listing.add(thing)
             else:
                 break
     return listing
+
 
 def main():
     r = praw.Reddit(USERAGENT, handler=MultiprocessHandler())
@@ -292,7 +292,13 @@ def main():
                         '{} {}'.format(thing.author.name, yt_spam.tag),
                         url=thing.author._url)
             stop_point = thing.id
+        end_time = time.time()
+        total_time = end_time - start_time
+        if total_time >= sleep_time:
+            sleep_time = 1
+        for i in range(sleep_time):
+            p('Next scan in {} seconds...'.format(sleep_time - i), end='')
+            time.sleep(1)
 
 if __name__ == '__main__':
     main()
-
