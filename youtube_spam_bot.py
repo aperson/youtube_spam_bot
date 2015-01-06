@@ -4,6 +4,7 @@
 import bz2
 from collections import defaultdict
 import json
+import operator
 import praw
 from praw.handlers import MultiprocessHandler
 import random
