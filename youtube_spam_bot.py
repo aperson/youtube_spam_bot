@@ -272,8 +272,8 @@ def get_listings(reddit, stop_point):
     all_listings = [i for i in subreddit.get_new(limit=1000, place_holder=stop_point)]
     listings = []
     for thing in all_listings:
-        if thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
-            if thing.author.name not in IGNORED_USERS:
+        if thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS.lower():
+            if thing.author.name.lower() not in IGNORED_USERS.lower():
                 listings.append(thing)
     return listings
 
