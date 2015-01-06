@@ -264,16 +264,16 @@ class YoutubeSpam(Filter):
 
 
 def get_listings(reddit, stop_point):
-    all_subreddits = reddit.get_subreddit('all')
-    listing = []
-    for thing in all_subreddits.get_new(limit=None):
+    all_listings = [i for i in reddit.get_subreddit('all').get_new(limt=None)]
+    listings = []
+    for thing in all_listings:
         if not thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
             if thing.id != stop_point:
                 p('Adding {} to things to process'.format(thing.id), color_seed=thing.id, end='')
                 listing.append(thing)
             else:
                 break
-    return listing
+    return listings
 
 
 def main():
