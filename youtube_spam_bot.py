@@ -263,7 +263,7 @@ class YoutubeSpam(Filter):
                 return output
 
 
-def get_listing(reddit, stop_point):
+def get_listings(reddit, stop_point):
     all_subreddits = reddit.get_subreddit('all')
     listing = []
     for thing in all_subreddits.get_new(limit=None):
@@ -286,7 +286,7 @@ def main():
     # Main Loop
     while True:
         sleep_time = 60
-        listings = get_listing(r, stop_point)
+        listings = get_listings(r, stop_point)
         for thing in listings:
             p('Processing {}'.format(thing.id), color_seed=thing.name, end='')
             if yt_spam.runFilter(thing):
