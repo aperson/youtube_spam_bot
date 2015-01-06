@@ -263,7 +263,7 @@ class YoutubeSpam(Filter):
 
 
 def get_listing(reddit, stop_point):
-    all_subreddits = 'all'
+    all_subreddits = reddit.get_subreddit('all')
     listing = []
     for thing in all_subreddits.get_new('all', limit=None):
         if not thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
