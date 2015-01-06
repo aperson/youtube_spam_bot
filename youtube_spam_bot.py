@@ -6,6 +6,7 @@ from collections import defaultdict
 import json
 import praw
 from praw.handlers import MultiprocessHandler
+import random
 import time
 import urllib.request
 
