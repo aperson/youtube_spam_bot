@@ -269,7 +269,8 @@ def get_listings(reddit, stop_point):
     for thing in all_listings:
         if not thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
             if thing.id != stop_point:
-                p('Adding {} to things to process'.format(thing.id), color_seed=thing.id, end='')
+                p('Adding {} to things to process. Total lenght: {}'.format(
+                    thing.id, len(listings)), color_seed=thing.id, end='')
                 listing.append(thing)
             else:
                 break
