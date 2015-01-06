@@ -288,9 +288,9 @@ def main():
         for thing in listings:
             p('Processing {}'.format(thing.id), color_seed=thing.name, end='')
             if yt_spam.runFilter(thing):
-                if f.report_subreddit:
+                if yt_spam.report_subreddit:
                     r.submit(
-                        f.report_subreddit,
+                        yt_spam.report_subreddit,
                         '{} {}'.format(thing.author.name, yt_spam.tag),
                         url=thing.author._url)
             stop_point = thing.id
