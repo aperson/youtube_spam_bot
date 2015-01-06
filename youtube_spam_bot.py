@@ -279,7 +279,7 @@ def main():
     r.login(USERNAME, PASSWORD)
     stop_point = ''
     yt_spam = YoutubeSpam(r, Youtube(cache_time=0))
-    p('Started monitoring submissions on /r/all-{}.'.format(IGNORED_SUBREDDITS.join('-')))
+    p('Started monitoring submissions on /r/all-{}.'.format('-'.join(IGNORED_SUBREDDITS)))
 
     # Main Loop
     while True:
