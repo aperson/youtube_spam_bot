@@ -273,7 +273,7 @@ def get_listings(reddit, stop_point):
     listings = []
     for thing in all_listings:
         if thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
-            if thing.author.name.lower() not in IGNORED_USERS:
+            if thing.author and thing.author.name.lower() not in IGNORED_USERS:
                 listings.append(thing)
     return listings
 
