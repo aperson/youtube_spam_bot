@@ -272,7 +272,7 @@ def get_listings(reddit, stop_point):
             if thing.id != stop_point:
                 p('Adding {} to things to process. Total lenght: {}'.format(
                     thing.id, len(listings)), color_seed=thing.id, end='')
-                listing.append(thing)
+                listings.append(thing)
             else:
                 break
     return listings
