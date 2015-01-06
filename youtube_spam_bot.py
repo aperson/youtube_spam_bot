@@ -268,6 +268,7 @@ def get_listing(reddit, stop_point):
     for thing in all_subreddits.get_new(limit=None):
         if not thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
             if thing.id != stop_point:
+                p('Adding {} to things to process'.format(thing.id), color_seed=thing.id, end='')
                 listing.append(thing)
             else:
                 break
@@ -286,7 +287,7 @@ def main():
         sleep_time = 60
         listings = get_listing(r, stop_point)
         for thing in listings:
-            p('Processing {}'.format(thing.id), color_seed=item.name, end="")
+            p('Processing {}'.format(thing.id), color_seed=thing.name, end='')
             if yt_spam.runFilter(thing):
                 if f.report_subreddit:
                     r.submit(
