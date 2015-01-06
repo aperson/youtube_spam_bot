@@ -25,6 +25,10 @@ except:
         '''
         somesubreddit
         '''.split())
+    IGNORED_USERS = (
+        '''
+        someuser
+        '''.split())
 
 
 def p(data, end='\n', color_seed=None):
@@ -269,7 +273,8 @@ def get_listings(reddit, stop_point):
     listings = []
     for thing in all_listings:
         if thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
-            listings.append(thing)
+            if thing.author.name not in IGNORED_USERS:
+                listings.append(thing)
     return listings
 
 
