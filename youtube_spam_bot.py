@@ -7,6 +7,7 @@ import json
 import praw
 from praw.handlers import MultiprocessHandler
 import random
+import re
 import time
 import urllib.request
 
