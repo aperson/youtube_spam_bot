@@ -268,7 +268,7 @@ def get_listing(reddit, stop_point):
     for thing in all_subreddits.get_new(limit=None):
         if not thing.subreddit.display_name.lower() not in IGNORED_SUBREDDITS:
             if thing.id != stop_point:
-                listing.add(thing)
+                listing.append(thing)
             else:
                 break
     return listing
