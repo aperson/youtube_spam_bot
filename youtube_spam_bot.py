@@ -241,26 +241,17 @@ class YoutubeSpam(Filter):
             if submission.author.name in db['users']:
                 user = db['users'][submission.author.name]
             else:
-                user = {'checked_last': 0, 'warned': False, 'banned': False}
+                user = {'checked_last': 0, 'reported': False}
 
-            if time.time() - user['checked_last'] > DAY:
+            if not user['reported']:
                 p("Checking profile of /u/{}".format(submission.author.name), end='')
-                user['checked_last'] = time.time()
                 if self._checkProfile(submission):
-                    if user['warned']:
-                        self.log_text = "Confirmed video spammer"
-                        p(self.log_text + ":")
-                        self.comment = ''
-                        self.report_subreddit = REPORT_SUBREDDIt
-                        self.ban = True
-                        self.nuke = True
-                        user['banned'] = True
-                    else:
-                        self.log_text = "Found potential video spammer"
-                        p(self.log_text + ":")
-                        p("http://reddit.com/u/{}".format(submission.author.name),
-                            color_seed=submission.author.name)
-                        user['warned'] = True
+                    self.log_text = "Found video spammer"
+                    p(self.log_text + ":")
+                    p("http://reddit.com/u/{}".format(submission.author.name),
+                        color_seed=submission.author.name)
+                    self.report_subreddit = REPORT_SUBREDDIT
+                    user['reported'] = True
                     output = True
                 else:
                     output = False
